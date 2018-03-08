@@ -4,4 +4,7 @@
 </h1>
 <button class="btn btn-success float-right">Add</button>
 
-<fbc-company-table [companies$]="companies$" (deleteCompanyEmitter)="deleteCompany($event)"></fbc-company-table>
+<fbc-company-table
+  [companies$]="companies$"
+  (deleteCompanyEmitter)="deleteCompany($event)">
+</fbc-company-table>
