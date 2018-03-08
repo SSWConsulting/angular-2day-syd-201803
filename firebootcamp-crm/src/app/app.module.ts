@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { CompanyListComponent } from './company/company-list/company-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CompanyService } from './company/company.service'
+import { CompanyService } from './company/company.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CompanyService } from './company/company.service'
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    HttpClientModule,
     NgbModule.forRoot()
   ],
   providers: [CompanyService],
