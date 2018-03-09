@@ -4,13 +4,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { catchError } from 'rxjs/operators/catchError';
+import { environment } from '../../environments/environment';
+
 
 @Injectable()
 export class CompanyService {
 
   constructor(private httpClient: HttpClient) { }
 
-  API_BASE = 'http://firebootcamp-crm-api.azurewebsites.net/api';
+  //API_BASE = 'http://firebootcamp-crm-api.azurewebsites.net/api';
+  API_BASE = environment.API_BASE;
 
   getCompanies(): Observable<Company[]> {
     return this.httpClient.get<Company[]>(`${this.API_BASE}/company`)

@@ -22,7 +22,7 @@ export class CompanyListComponent implements OnInit {
     this.getCompanies();
   }
 
-  getCompanies(){
+  getCompanies() {
     this.companies$ = this.companyService.getCompanies();
   }
 
