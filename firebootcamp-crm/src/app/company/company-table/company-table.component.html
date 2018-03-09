@@ -13,7 +13,7 @@
       <td>{{ company.email }}</td>
       <td>{{ company.phone }}</td>
       <td>
-        <button class="btn btn-default">Edit</button>
+        <button class="btn btn-default" [routerLink]="['/company/edit', company.id]" >Edit</button>
         <button class="btn btn-warning" (click)="deleteCompanyEmitter.emit(company)">Delete</button>
       </td>
     </tr>
