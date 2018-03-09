@@ -5,37 +5,44 @@ import { Observable } from 'rxjs/Observable';
 import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { catchError } from 'rxjs/operators/catchError';
 import { environment } from '../../environments/environment';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 
 @Injectable()
 export class CompanyService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.loadCompanies();
+   }
 
-  //API_BASE = 'http://firebootcamp-crm-api.azurewebsites.net/api';
+   companies$: BehaviorSubject<Company[]> = new BehaviorSubject<Company[]>([]);
+
   API_BASE = environment.API_BASE;
 
+loadCompanies() {
+  this.httpClient.get<Company[]>(`${this.API_BASE}/company`)
+  .subscribe(c => this.companies$.next(c));
+}
+
   getCompanies(): Observable<Company[]> {
-    return this.httpClient.get<Company[]>(`${this.API_BASE}/company`)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+    return this.companies$;
   }
 
-  deleteCompany(id: number): Observable<Company>{
+  deleteCompany(id: number) {
     return this.httpClient.delete<Company>(`${this.API_BASE}/company/${id}`)
     .pipe(
       catchError(this.errorHandler)
-    );
+    )
+    .subscribe(() => this.loadCompanies());
   }
 
-  addCompany(company: Company): Observable<Company>{
+  addCompany(company: Company){
     return this.httpClient.post<Company>(`${this.API_BASE}/company`,
      company,
      { headers: new HttpHeaders().set('content-type', 'application/json')})
      .pipe(
        catchError(this.errorHandler)
-     );
+     ).subscribe(() => this.loadCompanies());
   }
 
   getCompany(companyId: number): Observable<Company>{
@@ -45,13 +52,14 @@ export class CompanyService {
     );
   }
 
-  updateCompany(company: Company): Observable<Company>{
+  updateCompany(company: Company) {
     return this.httpClient.put<Company>(`${this.API_BASE}/company/${company.id}`,
     company,
     { headers: new HttpHeaders().set('content-type', 'application/json')})
     .pipe(
       catchError(this.errorHandler)
-    );
+    )
+    .subscribe(() => this.loadCompanies());
   }
 
   errorHandler(error: Error): Observable<any> {

@@ -60,17 +60,19 @@ export class CompanyEditComponent implements OnInit {
   }
 
   saveCompany(): void {
-    if(this.isNewCompany){
-      this.companyService.addCompany(this.companyForm.value).subscribe(
-        () => this.router.navigate(['/company/list'])
-      )
-    }else{
+    if (this.isNewCompany) {
+      this.companyService.addCompany(this.companyForm.value);
+      // .subscribe(
+      //   () => this.router.navigate(['/company/list'])
+      // )
+    } else {
       const newCompany: Company = {...this.companyForm.value, id: this.companyId}
       // {... = Spread operator
-
-      this.companyService.updateCompany(newCompany).subscribe(
-        () => this.router.navigateByUrl('/company/list')
-      )
+      this.companyService.updateCompany(newCompany);
+      // .subscribe(
+      //   () => this.router.navigateByUrl('/company/list')
+      // )
     }
+    this.router.navigateByUrl('/company/list');
   }
 }
